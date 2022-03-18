@@ -110,3 +110,8 @@ To determine which formats to reply use:
 (path="/{userId}", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
 Also to support xml, add jackson xml dataformat dependency from maven repo
 (delete version and let springboot decide
+
+-----------------------------------------------------------------------------------------------------------------
+HOW to return different status codes. 
+-most of the times server will do.
+-other times we can use ResponseEntity object - It can be used to set body, headers, HttpStatus
