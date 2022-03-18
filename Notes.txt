@@ -115,3 +115,8 @@ Also to support xml, add jackson xml dataformat dependency from maven repo
 HOW to return different status codes. 
 -most of the times server will do.
 -other times we can use ResponseEntity object - It can be used to set body, headers, HttpStatus
+
+-----------------------------------------------------------------------------------------------------------------
+@RequestBody 
+To be able to read information comming from request, read payload
+-It converts the payload to java object according to data type used

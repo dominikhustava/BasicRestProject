@@ -1,5 +1,6 @@
 package com.simplerestapi.restappws.ui.controller;
 
+import com.simplerestapi.restappws.ui.model.request.UserDetailsRequestModel;
 import com.simplerestapi.restappws.ui.model.response.UserRest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -19,8 +20,7 @@ public class UserController {
     }
 
     @GetMapping(path="/{userId}",
-            produces =
-            {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+            produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     public ResponseEntity<UserRest> getUser(@PathVariable String userId){
         UserRest returnValue = new UserRest();
         returnValue.setEmail("test@test.com");
@@ -30,9 +30,16 @@ public class UserController {
         return new ResponseEntity<UserRest>(returnValue, HttpStatus.OK);
     }
 
-    @PostMapping
-    public String createUser(){
-        return "createUser was called";
+    @PostMapping(
+            consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
+            produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+    public ResponseEntity<UserRest> createUser(@RequestBody UserDetailsRequestModel userDetails){
+        UserRest returnValue = new UserRest();
+        returnValue.setEmail(userDetails.getEmail());
+        returnValue.setFirstName(userDetails.getFirstName());
+        returnValue.setLastName(userDetails.getLastName());
+
+        return new ResponseEntity<UserRest>(returnValue, HttpStatus.OK);
     }
 
     @PutMapping
