@@ -1,0 +1,93 @@
+URL:(not rest)
+http://www.yourWebSiteAddress.com/api/users/?start=1&limit=50
+
+URI: /api/users
+
+Traditional
+POST /RegisterUserServlet
+{
+"firstName" : "James",
+"lastName" : "Bond"
+}
+REST
+POST /users
+{
+"firstName" : "James",
+"lastName" : "Bond"
+}
+-doesnt have any action in uri, simple colection name (if resource is User, uri will be users etc)
+Traditional
+GET
+/GetUserdetailsServlet?userId=1
+-query parameter with questionmark
+REST
+Get /users/1
+using PATH PARAMETERs
+using (GET, POST, PUT, DELETE)
+
+sinle resource vs whole collection:
+/users/1 vs /users/1
+
+GET /users/1/messages/5/comments vs /GetMessageComments?userId=1&messageId=5
+GET /users/1/messages/5/comments/1 vs /GetMessageComment?userId=1&messageId=5&commentId=1
+
+Nouns as opposed to verbs or actions: /users vs /getUsers/ (plurals rather then single)
+
+-----------------------------------------------------------------------------------------------------------------
+HTTP methods:
+
+non rest mostly GET/POST also for delete and update
+
+RESTful
+POST - Create user /users
+GET - Read user details. /users/1
+PUT - Update user details /users/1
+DELETE - Delete user details /users/1
+
+-----------------------------------------------------------------------------------------------------------------
+HTTP Headers: Accept, Content Type
+-Server gets data from request body eg json:
+{
+"firstName":"Dominik",
+"lastname":"Hustava",
+"email":"test@test.com",
+"password":"mypassword",
+"profilePictureUrl":"picture.jpg",
+"platform":"ios",
+"appversion":3.0"
+}
+Content-Type is a descriptor for server to know which format we are sending
+application/json 
+Accept - to tell the server which format we accept
+application/json, application/xml etc
+
+-----------------------------------------------------------------------------------------------------------------
+Download and instal jdk
+java -version
+java home folder:
+C:\Program Files\Java\jdk-11.0.2
+echo %JAVA_HOME% to output java home path
+= C:\Program Files\AdoptOpenJDK\jdk-11.0.11.9-hotspot
+mine actual java home
+
+setting via cmd: win
+setx -m JAVA_HOME "C:\Progra~1\Java\jdk1.8.0_XX"
+Progra~1 = 'Program Files'
+Progra~2 = 'Program Files(x86)'
+
+-----------------------------------------------------------------------------------------------------------------
+New project
+start.spring.io
+->web dependency
+
+-----------------------------------------------------------------------------------------------------------------
+Anotations
+@RestController - used at the class level and allows the class to handle the requests made by the client
+- allows to handle all REST APIs such as GET, POST, Delete, PUT requests.
+@RequestMapping
+- This annotation maps HTTP requests to handler methods of MVC and REST controllers. Eg in MV u have to make mappings between
+requests and handler methods
+-can be applied to class-level and/or method-level in a controller.
+class-level annotation maps a specific request path or pattern onto a controller. You can then apply additional method-level annotations to make mappings more specific to handler methods.
+https://dzone.com/articles/using-the-spring-requestmapping-annotation
+
