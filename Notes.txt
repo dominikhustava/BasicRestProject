@@ -85,9 +85,22 @@ Anotations
 @RestController - used at the class level and allows the class to handle the requests made by the client
 - allows to handle all REST APIs such as GET, POST, Delete, PUT requests.
 @RequestMapping
+- bindings
 - This annotation maps HTTP requests to handler methods of MVC and REST controllers. Eg in MV u have to make mappings between
 requests and handler methods
 -can be applied to class-level and/or method-level in a controller.
 class-level annotation maps a specific request path or pattern onto a controller. You can then apply additional method-level annotations to make mappings more specific to handler methods.
 https://dzone.com/articles/using-the-spring-requestmapping-annotation
 
+@GetMapping(path="/{userId}") - to accept path parameters with @PathVariable as method argument
+
+Query string parameters
+ - usage: eg pagination http://localhost:8080/users?page=1&limit=50
+ - to make it available in binded method use methodName(@RequestParam(value="page") int page)
+ - when we define more than one, we have call it with all of them, or define which are optional and required.
+
+One way is to use default value:
+(@RequestParam(value="page") int page, defaultValue="1")
+Or:
+Required=false - but we have to be cautios with primitive types. They can't be null/not inicialized, so we get an error when using with primitives
+And null branch should be handled or defaultValue used
