@@ -1,5 +1,7 @@
 package com.simplerestapi.restappws.ui.controller;
 
+import com.simplerestapi.restappws.ui.model.response.UserRest;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -14,9 +16,16 @@ public class UserController {
         return "getUsers was called with page = " + page + " and limit = " + limit + " sort = " + sort;
     }
 
-    @GetMapping(path="/{userId}")
-    public String getUser(@PathVariable String userId){
-        return "getUser was called " + userId;
+    @GetMapping(path="/{userId}",
+            produces =
+            {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+    public UserRest getUser(@PathVariable String userId){
+        UserRest returnValue = new UserRest();
+        returnValue.setEmail("test@test.com");
+        returnValue.setFirstName("Dominik");
+        returnValue.setLastName("Hustava");
+
+        return returnValue;
     }
 
     @PostMapping

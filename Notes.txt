@@ -104,3 +104,9 @@ One way is to use default value:
 Or:
 Required=false - but we have to be cautios with primitive types. They can't be null/not inicialized, so we get an error when using with primitives
 And null branch should be handled or defaultValue used
+
+-----------------------------------------------------------------------------------------------------------------
+To determine which formats to reply use:
+(path="/{userId}", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+Also to support xml, add jackson xml dataformat dependency from maven repo
+(delete version and let springboot decide
