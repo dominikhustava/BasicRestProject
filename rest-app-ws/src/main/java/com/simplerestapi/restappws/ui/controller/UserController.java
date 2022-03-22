@@ -9,10 +9,15 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("users") //http://localhost:8080/users
 public class UserController {
+
+    Map<String, UserRest> users;
 
     @GetMapping
     public String getUsers(@RequestParam(value="page", defaultValue="1") int page, @RequestParam(value="limit", defaultValue="50" ) int limit,
@@ -25,12 +30,11 @@ public class UserController {
     @GetMapping(path="/{userId}",
             produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     public ResponseEntity<UserRest> getUser(@PathVariable String userId){
-        UserRest returnValue = new UserRest();
-        returnValue.setEmail("test@test.com");
-        returnValue.setFirstName("Dominik");
-        returnValue.setLastName("Hustava");
-
-        return new ResponseEntity<UserRest>(returnValue, HttpStatus.OK);
+        if(users.containsKey(userId)){
+            return new ResponseEntity<UserRest>(users.get(userId), HttpStatus.OK);
+        }else{
+            return new ResponseEntity<UserRest>(HttpStatus.NO_CONTENT);
+        }
     }
 
     @PostMapping(
@@ -41,6 +45,12 @@ public class UserController {
         returnValue.setEmail(userDetails.getEmail());
         returnValue.setFirstName(userDetails.getFirstName());
         returnValue.setLastName(userDetails.getLastName());
+
+        String userId = UUID.randomUUID().toString();
+        returnValue.setUserID(userId);
+
+        if(users==null) users = new HashMap<>();
+        users.put(userId, returnValue);
 
         return new ResponseEntity<UserRest>(returnValue, HttpStatus.OK);
     }
