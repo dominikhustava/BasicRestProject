@@ -1,5 +1,6 @@
 package com.simplerestapi.restappws.ui.controller;
 
+import com.simplerestapi.restappws.exceptions.UserServiceCustomException;
 import com.simplerestapi.restappws.ui.model.request.UpdateUserDetailsRequestModel;
 import com.simplerestapi.restappws.ui.model.request.UserDetailsRequestModel;
 import com.simplerestapi.restappws.ui.model.response.UserRest;
@@ -32,10 +33,11 @@ public class UserController {
             produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     public ResponseEntity<UserRest> getUser(@PathVariable String userId){
 
-        String firstName = null;
-        //
-        //
-        int firstNameLength =  firstName.length();
+        //to cause nullpointer
+        //String firstName = null;
+        //int firstNameLength =  firstName.length();
+
+        if(true) throw new UserServiceCustomException("A user service custom exception is thrown");
 
         if(users.containsKey(userId)){
             return new ResponseEntity<UserRest>(users.get(userId), HttpStatus.OK);
