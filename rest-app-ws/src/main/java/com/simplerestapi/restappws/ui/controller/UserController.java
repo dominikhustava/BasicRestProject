@@ -1,5 +1,6 @@
 package com.simplerestapi.restappws.ui.controller;
 
+import com.simplerestapi.restappws.ui.model.request.UpdateUserDetailsRequestModel;
 import com.simplerestapi.restappws.ui.model.request.UserDetailsRequestModel;
 import com.simplerestapi.restappws.ui.model.response.UserRest;
 import org.springframework.http.HttpStatus;
@@ -55,9 +56,15 @@ public class UserController {
         return new ResponseEntity<UserRest>(returnValue, HttpStatus.OK);
     }
 
-    @PutMapping
-    public String updateUser(){
-        return "updateUser was called";
+    @PutMapping(path = "/{userId}",
+            consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
+            produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+    public UserRest updateUser(@PathVariable String userId, @Valid @RequestBody UpdateUserDetailsRequestModel userDetails){
+        UserRest storedUserDetails = users.get(userId);
+        storedUserDetails.setFirstName(userDetails.getFirstName());
+        storedUserDetails.setLastName(userDetails.getLastName());
+        users.put(userId, storedUserDetails);
+        return storedUserDetails;
     }
 
     @DeleteMapping
