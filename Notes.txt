@@ -120,3 +120,27 @@ HOW to return different status codes.
 @RequestBody 
 To be able to read information comming from request, read payload
 -It converts the payload to java object according to data type used
+
+-----------------------------------------------------------------------------------------------------------------
+Bean validation constrains
+https://github.com/dominikhustava/BasicRestProject/commit/fb2e48e12cd6b19353c8f26467a61b745afc8d36
+-no need to add dependency cuz we used spring starter web
+-not true anymore, needet to add to use javax.validation @Valid
+<dependency>
+	<groupId>org.springframework.boot</groupId>
+	<artifactId>spring-boot-starter-validation</artifactId>
+</dependency>
+
+-Hibernate fields validation constrains (or javax)
+
+-To see the error message we have to include this in application properties:
+server.error.include-message=always
+server.error.include-binding-errors=always
+
+-----------------------------------------------------------------------------------------------------------------
+Rest API exception handling:
+implement a global error handler for a Spring REST API. The one place where we can handle custom exceptions.
+-Create handler with @ControllerAdvice and @ExceptionHandler
+-@ControllerAdvice annotation is specialization of @Component annotation and it’s methods (annotated with @ExceptionHandler) are shared across multiple @Controller classes, globally.
+-extend ResponseEntityExceptionHandler and override handleException(Exception ex, WebRequest request)
+-In first example step we only send back as body inside ResponseEntity whole exception stack trace with 500 internal error
