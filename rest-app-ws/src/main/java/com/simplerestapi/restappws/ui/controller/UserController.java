@@ -4,6 +4,7 @@ import com.simplerestapi.restappws.exceptions.UserServiceCustomException;
 import com.simplerestapi.restappws.ui.model.request.UpdateUserDetailsRequestModel;
 import com.simplerestapi.restappws.ui.model.request.UserDetailsRequestModel;
 import com.simplerestapi.restappws.ui.model.response.UserRest;
+import com.simplerestapi.restappws.userservice.impl.UserServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -50,17 +51,8 @@ public class UserController {
             consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     public ResponseEntity<UserRest> createUser(@Valid @RequestBody UserDetailsRequestModel userDetails){
-        UserRest returnValue = new UserRest();
-        returnValue.setEmail(userDetails.getEmail());
-        returnValue.setFirstName(userDetails.getFirstName());
-        returnValue.setLastName(userDetails.getLastName());
 
-        String userId = UUID.randomUUID().toString();
-        returnValue.setUserID(userId);
-
-        if(users==null) users = new HashMap<>();
-        users.put(userId, returnValue);
-
+        UserRest returnValue = new UserServiceImpl().createUser(userDetails);
         return new ResponseEntity<UserRest>(returnValue, HttpStatus.OK);
     }
 
