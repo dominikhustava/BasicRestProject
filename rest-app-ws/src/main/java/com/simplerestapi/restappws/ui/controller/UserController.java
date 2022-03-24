@@ -4,7 +4,9 @@ import com.simplerestapi.restappws.exceptions.UserServiceCustomException;
 import com.simplerestapi.restappws.ui.model.request.UpdateUserDetailsRequestModel;
 import com.simplerestapi.restappws.ui.model.request.UserDetailsRequestModel;
 import com.simplerestapi.restappws.ui.model.response.UserRest;
+import com.simplerestapi.restappws.userservice.UserService;
 import com.simplerestapi.restappws.userservice.impl.UserServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +23,9 @@ import java.util.UUID;
 public class UserController {
 
     Map<String, UserRest> users;
+
+    @Autowired
+    UserService userService;
 
     @GetMapping
     public String getUsers(@RequestParam(value="page", defaultValue="1") int page, @RequestParam(value="limit", defaultValue="50" ) int limit,
@@ -52,7 +57,7 @@ public class UserController {
             produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     public ResponseEntity<UserRest> createUser(@Valid @RequestBody UserDetailsRequestModel userDetails){
 
-        UserRest returnValue = new UserServiceImpl().createUser(userDetails);
+        UserRest returnValue = userService.createUser(userDetails);
         return new ResponseEntity<UserRest>(returnValue, HttpStatus.OK);
     }
 
